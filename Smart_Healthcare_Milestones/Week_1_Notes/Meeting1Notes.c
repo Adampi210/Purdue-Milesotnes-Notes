@@ -34,20 +34,40 @@
 */
 
 // This function shows possible capacitor values for different resistances that result in a desired cutoff frequency
-void show_possible_capacitor_values(double cutoff_freq) {
-    double capacitance = 0;
-    double resistor_values[] = {10, 22, 47, 100, 220, 470, 1000, 2200, 4700, 10000, 22000, 47000, 100000, 220000, 470000, 1000000, 0};
-    int i = 0;
-    while(resistor_values[i] != 0){
-        capacitance = 1000000000 / (2 * M_PI * resistor_values[i] * cutoff_freq);
-        printf("For resitance: %.0lf Ohm, capacitance should be: %lfnF\n", resistor_values[i], capacitance);
+// Also the answer is shown with desired units as specified by c_order_specifier 
+void show_possible_capacitor_values(double cutoff_freq, char c_order_specifier) {
+    double capacitance;   // Declare capacitance
+    long value_to_divide; // Declare value to scale the units by (ex 10e6 = uF units, 10e9 = nF, 10e12 = pf)
+
+    // Depending on the c order specifier, set different scale to value_to_divide
+    switch (c_order_specifier) {
+    case 'u':
+        value_to_divide = 10e6; // if its u, set 10e6
+        break;
+    case 'n':
+        value_to_divide = 10e9; // if its n, set 10e9
+        break;
+    case 'p':
+        value_to_divide = 10e12; // if its p, set 10e12
+        break;
+    default:
+        value_to_divide = 10e9; // set n by default
+        c_order_specifier = 'n'; // set the specifier to n by default
+        break;
+    }
+    // Declare an array of possible resistance values
+    const double resistor_values[] = {10, 22, 47, 100, 220, 470, 1000, 2200, 4700, 10000, 22000, 47000, 100000, 220000, 470000, 1000000, 0};
+    int i = 0; // Initialize loop i variable to 0, and go through all resistance values
+    while(resistor_values[i] != 0) {
+        // For a given resistance, calculate the corresponding capacitance and print it to the user
+        capacitance = value_to_divide / (2 * M_PI * resistor_values[i] * cutoff_freq);
+        printf("For resitance: %.0lf Ohm, capacitance should be: %lf%cF\n", resistor_values[i], capacitance, c_order_specifier);
         ++i;
     }
-    
 }
 
 int main(int argc, char const *argv[])
 {
-    show_possible_capacitor_values(0.5);
+    show_possible_capacitor_values(1000, 'n'); // Print possible capacitances for 1000Hz cutoff freq in nF
     return 0;
 }
