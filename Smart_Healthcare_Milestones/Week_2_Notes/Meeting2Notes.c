@@ -38,9 +38,9 @@ void print_possible_feedback_resistor_vals(double, double);
 double find_output_inverting_op_amp(double, double, double);
 
 int main(int argc, char const *argv[]) {
-    show_possible_capacitor_values(100, 'u');         // Show possible capacitor values for 100Hz cutoff freq in uF
-    find_output_inverting_op_amp(5, 1000000, 200000); // Calculate inverting amplifier output using given parameters
-    print_possible_feedback_resistor_vals(0.001, -1); // Show possible values of R_f and R_in for specified Vin and Vout
+    show_possible_capacitor_values(1000, 'n');         // Show possible capacitor values for 100Hz cutoff freq in uF
+    //find_output_inverting_op_amp(5, 1000000, 200000); // Calculate inverting amplifier output using given parameters
+    //print_possible_feedback_resistor_vals(1, 35); // Show possible values of R_f and R_in for specified Vin and Vout
     return 0;
 }
 
@@ -53,16 +53,16 @@ void show_possible_capacitor_values(double cutoff_freq, char c_order_specifier) 
     // Depending on the c order specifier, set different scale to value_to_divide
     switch (c_order_specifier) {
     case 'u':
-        value_to_divide = 10e6; // if its u, set 10e6
+        value_to_divide = 1e6; // if its u, set 10e6
         break;
     case 'n':
-        value_to_divide = 10e9; // if its n, set 10e9
+        value_to_divide = 1e9; // if its n, set 10e9
         break;
     case 'p':
-        value_to_divide = 10e12; // if its p, set 10e12
+        value_to_divide = 1e12; // if its p, set 10e12
         break;
     default:
-        value_to_divide = 10e9; // set n by default
+        value_to_divide = 1e9; // set n by default
         c_order_specifier = 'n'; // set the specifier to n by default
         break;
     }

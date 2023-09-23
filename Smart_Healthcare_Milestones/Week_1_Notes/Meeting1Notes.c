@@ -42,16 +42,16 @@ void show_possible_capacitor_values(double cutoff_freq, char c_order_specifier) 
     // Depending on the c order specifier, set different scale to value_to_divide
     switch (c_order_specifier) {
     case 'u':
-        value_to_divide = 10e6; // if its u, set 10e6
+        value_to_divide = 1e6; // if its u, set 10e6
         break;
     case 'n':
-        value_to_divide = 10e9; // if its n, set 10e9
+        value_to_divide = 1e9; // if its n, set 10e9
         break;
     case 'p':
-        value_to_divide = 10e12; // if its p, set 10e12
+        value_to_divide = 1e12; // if its p, set 10e12
         break;
     default:
-        value_to_divide = 10e9; // set n by default
+        value_to_divide = 1e9; // set n by default
         c_order_specifier = 'n'; // set the specifier to n by default
         break;
     }
